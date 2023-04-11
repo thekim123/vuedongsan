@@ -10,12 +10,6 @@ export default {
     props:{
         discountRate: Number,
     },
-
-    mounted() {
-        setInterval(()=>{
-            this.$emit('reduceDiscountRate');
-        }, 1000);
-    },
 }
 
 
