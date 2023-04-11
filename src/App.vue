@@ -9,6 +9,8 @@
     <a v-for="(a, i) in 메뉴들" :key="i">{{a}}</a>
   </div>
 
+  <DiscountCard v-if="showDiscount==true" :discountRate="discountRate"></DiscountCard>
+
   <button @click="titleSort">이름순</button>
   <button @click="priceSortAsc">가격순</button>
   <button @click="priceSortDesc">가격역순</button>
@@ -16,19 +18,25 @@
   <button @click="sortBack">되돌리기</button>
 
   <ProductCard @openModal="모달창열렸니=true; 누른거=$event" v-for="(oneRoom, i) in 원룸들" :key="oneRoom" :oneRoom="원룸들[i]" :모달창열렸니="모달창열렸니" :누른거="누른거"/>
+
+
 </template>
 
 <script>
 
 
 import 작명 from './assets/oneroom.js';
+import DiscountCard from './components/DiscountCard.vue';
 import ModalCard from './components/ModalCard.vue';
 import ProductCard from './components/ProductCard.vue';
+
 
 export default {
   name: 'App',
   data(){
     return{
+      showDiscount: true,
+      discountRate: 20,
       원룸들오리지널 : [...작명],
       원룸들 : 작명,
       모달창열렸니 : false,
@@ -78,11 +86,26 @@ export default {
       this.원룸들= newArr;
     },
   },
+  
+  mounted() {
+        setInterval(()=>{
+            if(this.discountRate==1){
+              this.showDiscount=false;
+            }
+            this.discountRate--;
+        }, 1000);
+  },
 
+  // mounted(){
+  //     setTimeout(() => {
+  //         this.showDiscount=false;
+  //     }, 2000);
+  // },
 
   components: {
     ModalCard: ModalCard,
     ProductCard: ProductCard,
+    DiscountCard: DiscountCard,
   }
 }
 </script>
@@ -169,6 +192,14 @@ div{
 .fade-leave-to{
   /* opacity: 0; */
   transform: translateY(-1000px);
+}
+
+.discount{
+  width: 50%;
+  background: #eee;
+  padding: 10px;
+  margin: 10px auto;
+  border-radius: 10px;
 }
 
 </style>

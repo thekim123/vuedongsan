@@ -16,7 +16,7 @@ export default {
     name:'ModalCard',
     data(){
       return {
-        month: '1',
+        month: '3',
       }
     },
     props:{
@@ -47,6 +47,13 @@ export default {
        }
       }
     },
+
+    updated(){
+      if(this.month<=2){
+        alert('우리는 2개월 이하는 안팔아...');
+        this.month='3';
+      }
+    }
 }
 </script>
 
