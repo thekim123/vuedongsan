@@ -1,34 +1,20 @@
 <template>
 
-  <div class="black-bg" v-if="모달창열렸니 == true">
-    <div class="white-bg">
-      <h4>상세페이지임</h4>
-      <p>상세페이지 내용임</p>
-      <button @click="모달창열렸니 = false">닫기</button>
-    </div>
-  </div>
-
-
-
+  <ModalCard @closeModal="모달창열렸니=false" :모달창열렸니="모달창열렸니" :원룸들="원룸들" :누른거="누른거"></ModalCard>
 
   <div class="menu">
     <a v-for="(a, i) in 메뉴들" :key="i">{{a}}</a>
   </div>
 
-  <div v-for="(b,i) in products" :key="i">
-    <img :src="원룸들[i].image" class="room-img">
-    <h4 class="red" :style="스타일" @click="모달창열렸니 = true">{{원룸들[i].title}}</h4>
-    <p>{{ 원룸들[i].price }} 원</p>
-  </div>  
-
+  <ProductCard @openModal="모달창열렸니=true; 누른거=$event" v-for="(oneRoom, i) in 원룸들" :key="oneRoom" :oneRoom="원룸들[i]" :모달창열렸니="모달창열렸니" :누른거="누른거"/>
 </template>
 
 <script>
 
 
 import 작명 from './assets/oneroom.js';
-작명
-
+import ModalCard from './components/ModalCard.vue';
+import ProductCard from './components/ProductCard.vue';
 
 export default {
   name: 'App',
@@ -36,12 +22,9 @@ export default {
     return{
       원룸들 : 작명,
       모달창열렸니 : false,
-      roomAddr : ['./assets/room0.jpg','./room1.jpg','./room2.jpg'],
-      price : [60,70,80],
-      신고수 : [0,0,0],
       스타일 : 'color : red',
       메뉴들 : ['Home', 'Shop', 'About'],
-      products : ['역삼동원룸', '천호동원룸', '마포구원룸']
+      누른거 : 0,
     }
   },
 
@@ -52,7 +35,8 @@ export default {
   },
 
   components: {
-    
+    ModalCard: ModalCard,
+    ProductCard: ProductCard,
   }
 }
 </script>
@@ -78,7 +62,7 @@ export default {
 }
 
 .room-img {
-  width: 75%;
+  width: 50%;
   margin-top: 40px;
 }
 
